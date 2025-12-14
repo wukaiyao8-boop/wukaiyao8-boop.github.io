@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>托爾斯泰完整人生地理軌跡時間軸</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "微軟雅黑", "新細明體", sans-serif; }
+
+        body {
+            background: #f8f5f0;
+            padding: 20px 0;
+            color: #222;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        /* ===== 新增：時間軸置中 ===== */
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 水平置中 */
+            width: 100%;
+            position: relative;
+            padding-bottom: 60px;
+        }
+        .timeline-container::before {
+            /* 隱藏原本的中央線 */
+            display: none;
+        }
+        .timeline-item {
+            width: 85%; /* 調整寬度以置中顯示 */
+            max-width: 900px;
+            flex-direction: column;
+            margin: 50px auto;
+            padding-top: 20px;
+        }
+        .timeline-time {
+            text-align: left;
+            width: 100%;
+            font-size: 22px;
+            color: #8b4513;
+            margin-bottom: 8px;
+            justify-content: flex-start !important;
+            padding-left: 0 !important;
+        }
+        .timeline-content {
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .timeline-content::before { display: none; }
+
+        /* ===== 其他既有 CSS：地圖、按鈕、燈箱、夜間模式 等等 ===== */
+
+        /* 頂部工具列 */
+        .toolbar { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:18px; }
+        .toolbar .btn { background:#8b4513; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-size:14px; }
+        .toolbar .btn.secondary { background:#d2b48c; color:#8b4513; }
+        .toolbar .control { display:flex; align-items:center; gap:8px; }
+
+        /* 地圖區 */
+        .map-container { margin: 0 auto 26px; }
+        .map-title { text-align:center; color:#8b4513; margin-bottom:12px; font-size:22px; font-weight:bold; }
+        .map-wrapper { position:relative; border-radius:8px; box-shadow:0 3px 15px rgba(0,0,0,0.18); border:3px solid #d2b48c; overflow:hidden; background:#e8dfd0; height:450px; }
+        .map-point { position:absolute; width:20px; height:20px; border-radius:50%; background:#8b4513; border:3px solid #fff; box-shadow:0 0 10px rgba(139,69,19,0.9); z-index:2; transition: transform 0.3s, box-shadow 0.3s; display:flex; align-items:center; justify-content:center; }
+        .map-point:hover { transform:scale(1.3); }
+        .map-point::after { content: attr(data-name); position:absolute; top:-35px; left:50%; transform:translateX(-50%); background:rgba(139,69,19,0.95); color:#fff; font-size:14px; padding:4px 10px; border-radius:6px; white-space:nowrap; box-shadow:0 2px 5px rgba(0,0,0,0.2); pointer-events:none; opacity:0; transition:opacity .18s; }
+        .map-point:hover::after { opacity:1; }
+        .route-dot { position:absolute; width:16px; height:16px; border-radius:50%; background:#ff4500; border:3px solid #fff; box-shadow:0 0 12px rgba(255,69,0,1); animation: routeMove 30s linear infinite; z-index:3; opacity:0; }
+        @keyframes routeMove {
+            0% { left:46%; top:40%; opacity:0; } 3% { left:46%; top:40%; opacity:1; }
+            8% { left:72%; top:30%; opacity:1; } 13% { left:72%; top:30%; opacity:1; }
+            18% { left:85%; top:60%; opacity:1; } 23% { left:85%; top:60%; opacity:1; }
+            28% { left:88%; top:78%; opacity:1; } 33% { left:88%; top:78%; opacity:1; }
+            38% { left:32%; top:18%; opacity:1; } 43% { left:32%; top:18%; opacity:1; }
+            48% { left:50%; top:28%; opacity:1; } 53% { left:50%; top:28%; opacity:1; }
+            58% { left:43%; top:48%; opacity:1; } 63% { left:43%; top:48%; opacity:1; }
+            73% { left:46%; top:40%; opacity:1; } 83% { left:46%; top:40%; opacity:1; }
+            93% { left:62%; top:58%; opacity:1; } 98% { left:62%; top:58%; opacity:0; } 100% { left:62%; top:58%; opacity:0; }
+        }
+        .map-annotation { text-align:center; font-size:15px; color:#666; margin-top:12px; line-height:1.8; max-width:900px; margin-left:auto; margin-right:auto; }
+
+        /* 時間軸文字與按鈕 */
+        .timeline-location { display:inline-block; background:#d2b48c; color:#8b4513; font-size:14px; padding:4px 10px; border-radius:16px; margin-bottom:12px; font-weight:500; }
+        .timeline-title { font-size:18px; color:#333; margin-bottom:8px; }
+        .timeline-desc { color:#555; margin:12px 0; line-height:1.7; font-size:15px; }
+        .timeline-monologue { font-style:italic; color:#666; margin:10px 0; line-height:1.7; font-size:14px; border-left:3px solid #d2b48c; padding-left:12px; }
+        .timeline-btn { background:#8b4513; color:#fff; border:none; padding:9px 14px; border-radius:6px; cursor:pointer; margin-top:8px; margin-right:8px; font-size:13px; transition:background .3s; }
+        .timeline-btn:hover { background:#6d3811; }
+        .location-detail { display:none; margin-top:12px; padding:12px; background:#faf6f0; border-radius:6px; font-size:13px; color:#666; line-height:1.6; border-left:3px solid #d2b48c; }
+
+        /* 圖片樣式 */
+        .location-image { width:100%; max-height:260px; object-fit:cover; border-radius:8px; margin-top:10px; cursor:pointer; border:2px solid #eee; box-shadow:0 6px 14px rgba(0,0,0,0.08); }
+        .img-caption { font-size:12px; color:#666; margin-top:6px; }
+
+        /* 回到頂部按鈕 */
+        .top-btn { position:fixed; bottom:24px; right:24px; padding:10px 14px; background:#8b4513; color:#fff; border:none; border-radius:8px; cursor:pointer; display:none; z-index:9999; }
+
+        /* 燈箱 */
+        .lightbox { position:fixed; inset:0; background:rgba(0,0,0,0.8); display:none; align-items:center; justify-content:center; z-index:10000; }
+        .lightbox img { max-width:95%; max-height:85%; border-radius:8px; box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+
+        /* 夜間模式 */
+        .dark-mode { background:#111 !important; color:#e8e2d9 !important; }
+        .dark-mode .map-wrapper { background:#222; border-color:#6b4a2b; }
+        .dark-mode .timeline-content { background:#1c1c1c; color:#e6e6e6; box-shadow:0 6px 18px rgba(0,0,0,0.5); }
+        .dark-mode .timeline-location { background:#5b3f2a; color:#f2e6cc; }
+        .dark-mode .map-point { background:#c28b4a; border-color:#222; }
+        .dark-mode .toolbar .btn.secondary { background:#6b4a2b; color:#fff; }
+
+        /* 響應式 */
+        @media (max-width: 900px) {
+            .timeline-item { width:95%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 頂部工具 -->
+        <div class="toolbar" aria-hidden="false">
+            <button class="btn" id="expandAllBtn">展開全部地理詳情</button>
+            <button class="btn" id="collapseAllBtn">收起全部地理詳情</button>
+            <button class="btn secondary" id="expandDetailsBtn">展開所有創作/思想詳情</button>
+            <button class="btn secondary" id="collapseDetailsBtn">收起所有創作/思想詳情</button>
+
+            <div class="control" style="margin-left:6px;">
+                <label style="font-size:13px;color:#666;">路線動畫</label>
+                <button class="btn" id="toggleRouteBtn">暫停動畫</button>
+            </div>
+
+            <div class="control">
+                <label style="font-size:13px;color:#666;">速度</label>
+                <input id="speedRange" type="range" min="5" max="60" value="30" style="width:140px;">
+            </div>
+
+            <button class="btn" id="toggleDarkBtn">切換夜間模式</button>
+
+            <select id="jumpSelect" style="padding:8px 10px; border-radius:6px; border:1px solid #dcdcdc;">
+                <option value="">跳轉到地點…</option>
+                <option value="mp1">亞斯納亞·波良納莊園（出生/創作）</option>
+                <option value="mp2">喀山（求學）</option>
+                <option value="mp3">高加索（從軍/初創作）</option>
+                <option value="mp4">克里米亞（參戰/寫作）</option>
+                <option value="mp5">聖彼得堡（文學交際）</option>
+                <option value="mp6">莫斯科（思想轉變）</option>
+                <option value="mp7">奧普京修道院（精神探索）</option>
+                <option value="mp8">阿斯塔波沃車站（生命終點）</option>
+            </select>
+        </div>
+
+
+        <!-- 地圖區塊 -->
+        <div class="map-container">
+            <h3 class="map-title">托爾斯泰完整人生地理軌跡圖</h3>
+            <div class="map-wrapper" id="mapWrapper">
+                <!-- 8個關鍵地點節點（坐標已校準） -->
+                <!-- 我保留了你原始每個地點的中文描述，並加上 id 與 data-img 屬性 -->
+                <div class="map-point" id="mp1" style="left:46%; top:40%;" data-name="亞斯納亞·波良納莊園（出生/創作）" data-img="https://picsum.photos/seed/yasnaya/900/600"></div>
+                <div class="map-point" id="mp2" style="left:72%; top:30%;" data-name="喀山（求學）" data-img="https://picsum.photos/seed/kazan/900/600"></div>
+                <div class="map-point" id="mp3" style="left:85%; top:60%;" data-name="高加索（從軍/初創作）" data-img="https://picsum.photos/seed/caucasus/900/600"></div>
+                <div class="map-point" id="mp4" style="left:88%; top:78%;" data-name="克里米亞（參戰/寫作）" data-img="https://picsum.photos/seed/crimea/900/600"></div>
+                <div class="map-point" id="mp5" style="left:32%; top:18%;" data-name="聖彼得堡（文學交際）" data-img="https://picsum.photos/seed/petersburg/900/600"></div>
+                <div class="map-point" id="mp6" style="left:50%; top:28%;" data-name="莫斯科（思想轉變）" data-img="https://picsum.photos/seed/moscow/900/600"></div>
+                <div class="map-point" id="mp7" style="left:43%; top:48%;" data-name="奧普京修道院（精神探索）" data-img="https://picsum.photos/seed/optina/900/600"></div>
+                <div class="map-point" id="mp8" style="left:62%; top:58%;" data-name="阿斯塔波沃車站（生命終點）" data-img="https://picsum.photos/seed/astapovo/900/600"></div>
+
+                <!-- 路線動畫點 -->
+                <div class="route-dot" id="routeDot"></div>
+            </div>
+            <p class="map-annotation">
+                動畫軌跡：亞斯納亞·波良納 → 喀山 → 高加索 → 克里米亞 → 聖彼得堡 → 莫斯科 → 奧普京修道院 → 亞斯納亞·波良納 → 阿斯塔波沃車站（30秒循環，hover節點可查看名稱）
+            </p>
+        </div>
+
+        <!-- 時間軸內容（原文所有中文字完全保留） -->
+        <div class="timeline-container" id="timeline">
+            <!-- 條目1：1828年 亞斯納亞·波良納莊園 -->
+            <div class="timeline-item" id="item1">
+                <div class="timeline-time">1828年</div>
+                <div class="timeline-content">
+                    <span class="timeline-location">地理坐標：亞斯納亞·波良納莊園（俄羅斯圖拉州）</span>
+                    <h3 class="timeline-title">出生於貴族莊園</h3>
+                    <p class="timeline-desc">列夫·托爾斯泰出生於俄國貴族家庭，亞斯納亞·波良納莊園是其家族世襲產業。這裡的自然環境與莊園生活，成為他日後創作中「貴族生活」與「田園理想」的重要原型。</p>
+                    <button class="timeline-btn" onclick="showLocation('location1')">地理詳情</button>
+                    <button class="timeline-btn" onclick="highlightMapPoint('mp1')">高亮地圖位置</button>
+                    <div id="location1" class="location-detail" data-point="mp1">
+                        <p>莊園佔地面積約3300公頃，包含森林、湖泊、農田與貴族宅邸。托爾斯泰的童年與少年時光在此度過，莊園內的「綠色書房」（戶外涼亭）是他常去的閱讀場所，後成為其創作《童年》《少年》的靈感來源。</p>
+                        <a href="https://ibb.co/1GSknnLM"><img src="https://i.ibb.co/DfqZbbtY/IMG-8190.jpg" alt="IMG-8190" border="0"></a>
+                        <div class="img-caption"> 位於圖拉州的雅斯納亞·波良納莊園（示意圖）</div>
+                       <a href="https://ibb.co/qLPwVZd8"><img src="https://i.ibb.co/JWMPghKT/IMG-8191.jpg" alt="IMG-8191" border="0"></a>
+                        <div class="img-caption"> 在雅斯納亞·波良納期間托爾斯泰的家庭照片 </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 條目2：1844年 喀山 -->
+            <div class="timeline-item" id="item2">
+                <div class="timeline-time">1844年</div>
+                <div class="timeline-content">
+                    <span class="timeline-location">地理坐標：喀山（俄羅斯韃靼斯坦共和國首都）</span>
+                    <h3 class="timeline-title">就讀喀山大學</h3>
+                    <p class="timeline-desc">父母離世後，托爾斯泰投靠喀山的姑母，考入喀山大學東方語言系，後轉至法律系。他對學校僵化的教育制度深感不滿，熱衷於閱讀盧梭、伏爾泰等啟蒙思想家的著作。</p>
+                    <p class="timeline-monologue">"喀山的課堂沒有教會我真理，盧梭的書卻讓我看到了人性的自由與平等。"</p>
+                    <button class="timeline-btn" onclick="showLocation('location2')">地理詳情</button>
+                    <button class="timeline-btn" onclick="highlightMapPoint('mp2')">高亮地圖位置</button>
+                    <div id="location2" class="location-detail" data-point="mp2">
+                        <p>喀山是19世紀俄國東部的文化教育中心，喀山大學建於1804年，培養了眾多傑出人才。托爾斯泰在喀山期間，常與同學討論哲學與社會問題，初步形成了對貴族特權的批判意識，1847年因學業不佳退學返回莊園。</p>
+                       <a href="https://ibb.co/FbmPHcCj"><img src="https://i.ibb.co/RpY5jtdV/IMG-8242.jpg" alt="IMG-8242" border="0"></a>
+                        <div class="img-caption"> 喀山大學（後改名為喀山聯邦大學）</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 條目3：1851年 高加索 -->
+            <div class="timeline-item" id="item3">
+                <div class="timeline-time">1851年</div>
+                <div class="timeline-content">
+                    <span class="timeline-location">地理坐標：高加索（俄羅斯南部高加索山脈地區）</span>
+                    <h3 class="timeline-title">加入炮兵部隊參戰</h3>
+                    <p class="timeline-desc">為逃避莊園的生活與債務，托爾斯泰前往高加索投靠兄長，加入沙皇軍隊成為炮兵軍官，參與鎮壓山民起義的戰鬥。這段經歷讓他親歷戰爭殘酷，也接觸到普通士兵與山民的質樸生活。</p>
+                    <button class="timeline-btn" onclick="showDetail('detail3')">創作關聯</button>
+                    <button class="timeline-btn" onclick="showLocation('location3')">地理詳情</button>
+                    <button class="timeline-btn" onclick="highlightMapPoint('mp3')">高亮地圖位置</button>
+                    <div id="detail3" style="display:none; margin-top:12px; padding:10px; background:#f5f0e6; border-radius:4px;">
+                        <p>在高加索期間，托爾斯泰開始文學創作，完成自傳體小說《童年》《少年》，並寫下《襲擊》《伐木》等描寫高加索風光與戰爭的短篇故事，其獨特的敘事風格初露鋒芒。</p>
+                    </div>
+                    <div id="location3" class="location-detail" data-point="mp3">
+                        <p>高加索地區因地理偏遠、民族複雜，成為19世紀俄國的邊疆戰場。托爾斯泰駐紮的捷列克河沿岸，自然風光壯麗，山民的豪爽與堅韌給了他深刻印象，也讓他對比出貴族生活的虛偽，為日後思想轉變埋下伏筆。</p>
+                        <a href="https://ibb.co/cKP87FSS"><img src="https://i.ibb.co/Myb13Vxx/IMG-8195.jpg" alt="IMG-8195" border="0"></a>
+                        <div class="img-caption">高加索山脈</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 條目4：1853年 克里米亞 -->
+            <div class="timeline-item" id="item4">
+                <div class="timeline-time">1853年</div>
+                <div class="timeline-content">
+                    <span class="timeline-location">地理坐標：克里米亞（俄羅斯克里米亞半島）</span>
+                    <h3 class="timeline-title">親歷克里米亞戰爭</h3>
+                    <p class="timeline-desc">克里米亞戰爭爆發後，托爾斯泰從高加索調往克里米亞，參與塞瓦斯托波爾保衛戰。他先後擔任軍官、副官，目睹了戰爭的血腥與士兵的苦難，對沙皇軍隊的腐敗與戰爭的非正義性有了深刻認識。</p>
+                    <button class="timeline-btn" onclick="showDetail('detail4')">創作關聯</button>
+                    <button class="timeline-btn" onclick="showLocation('location4')">地理詳情</button>
+                    <button class="timeline-btn" onclick="highlightMapPoint('mp4')">高亮地圖位置</button>
+                    <div id="detail4" style="display:none; margin-top:12px; padding:10px; background:#f5f0e6; border-radius:4px;">
+                        <p>托爾斯泰以克里米亞戰爭為背景，創作了《塞瓦斯托波爾故事》三部曲，真實描寫了戰爭的殘酷與普通士兵的英勇，打破了傳統戰爭文學的英雄化敘事，在俄國文壇引起巨大反響。</p>
+                    </div>
+                    <div id="location4" class="location-detail" data-point="mp4">
+                        <p>克里米亞半島位於黑海北岸，是戰略要地。塞瓦斯托波爾作為俄國黑海艦隊基地，成為戰爭的核心戰場。托爾斯泰在圍城戰中堅守陣地，多次冒著炮火執行任務，這段經歷徹底改變了他對戰爭與軍隊的看法。</p>
+                       <a href="https://ibb.co/M5kDhDwF"><img src="https://i.ibb.co/YTB7W7nH/IMG-8196.jpg" alt="IMG-8196" border="0"></a>
+                        <div class="img-caption">托爾斯泰在克里米亞</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 條目5：1856年 聖彼得堡 -->
+            <div class="timeline-item" id="item5">
+                <div class="timeline-time">1856年</div>
+                <div class="timeline-content">
+                    <span class="timeline-location">地理坐標：聖彼得堡（俄羅斯西北部）</span>
+                    <h3 class="timeline-title">退役後進入文學界</h3>
+                    <p class="timeline-desc">戰爭結束後，托爾斯泰退役前往聖彼得堡，憑藉《塞瓦斯托波爾故事》的成功進入上流社會文學圈，結識了屠格涅夫、岡察洛夫等著名作家，參與文學雜誌的編輯與討論。</p>
+                    <p class="timeline-monologue">"聖彼得堡的沙龍裡，人們談論藝術卻漠視苦難，這種虛偽讓我窒息。"</p>
+                    <button class="timeline-btn" onclick="showLocation('location5')">地理詳情</button>
+                    <button class="timeline-btn" onclick="highlightMapPoint('mp5')">高亮地圖位置</button>
+                    <div id="location5" class="location-detail" data-point="mp5">
+                        <p>聖彼得堡是當時俄國的首都與文化中心，貴族沙龍與文學團體活躍。托爾斯泰在此期間頻繁參加文學聚會，但他與上流社會的價值觀格格不入，對貴族們的享樂主義與空談作風深感厭惡，最終於1857年離開聖彼得堡，開啟歐洲旅行。</p>
+                       <a href="https://ibb.co/81Fx4bH"><img src="https://i.ibb.co/LV4ghr3/IMG-8197.jpg" alt="IMG-8197" border="0"></a>
+                        <div class="img-caption">托爾斯泰在聖彼得堡</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 條目6：1882年 莫斯科 -->
+            <div class="timeline-item" id="item6">
+                <div class="timeline-time">1882年</div>
+                <div class="timeline-content">
+                    <span class="timeline-location">地理坐標：莫斯科（俄羅斯首都）</span>
+                    <h3 class="timeline-title">參與貧民調查，思想轉變</h3>
+                    <p class="timeline-desc">托爾斯泰在莫斯科哈莫夫尼基區購置莊園，主動參與莫斯科貧民區的社會調查，親眼目睹城市底層人民的極端貧困與悲慘生活，深刻認識到俄國社會的階級對立與制度腐朽。</p>
+                    <button class="timeline-btn" onclick="showDetail('detail6')">思想關聯</button>
+                    <button class="timeline-btn" onclick="showLocation('location6')">地理詳情</button>
+                    <button class="timeline-btn" onclick="highlightMapPoint('mp6')">高亮地圖位置</button>
+                    <div id="detail6" style="display:none; margin-top:12px; padding:10px; background:#f5f0e6; border-radius:4px;">
+                        <p>莫斯科的經歷讓托爾斯泰徹底放棄了對貴族生活的留戀，思想從「貴族式反思」轉向「平民化的博愛主義」。他開始批判沙皇制度、教會特權，主張「非暴力抵抗」與「道德自我完善」，並編寫平民讀物、創辦農民學校。</p>
+                    </div>
+                    <div id="location6" class="location-detail" data-point="mp6">
+                        <p>19世紀的莫斯科是俄國工業中心，但貧富差距懸殊。托爾斯泰調查的哈莫夫尼基、祖博夫卡等貧民區，房屋破舊、衛生惡劣，大量工人與流浪者掙扎在生存邊緣。這段經歷被他寫入《那麼我們該怎麼辦？》等論著中。</p>
+                       <a href="https://ibb.co/9k44L31N"><img src="https://i.ibb.co/tT22tPv4/IMG-8193.jpg" alt="IMG-8193" border="0"></a>
+                        <div class="img-caption"> 托爾斯泰位於莫斯科哈莫夫尼基的住所  </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 條目7：1884年 奧普京修道院 -->
+            <div class="timeline-item" id="item7">
+                <div class="timeline-time">1884年</div>
+                <div class="timeline-content">
+                    <span class="timeline-location">地理坐標：奧普京修道院（俄羅斯卡盧加州科澤利斯克）</span>
+                    <h3 class="timeline-title">探訪修道院，精神求索</h3>
+                    <p class="timeline-desc">在思想轉變的關鍵時期，托爾斯泰多次前往奧普京修道院，與著名修士阿姆夫羅西耶夫長談，探討宗教、道德與人生意義。他曾萌生過出家的念頭，但最終拒絕了教會的教條束縛。</p>
+                    <button class="timeline-btn" onclick="showDetail('detail7')">思想關聯</button>
+                    <button class="timeline-btn" onclick="showLocation('location7')">地理詳情</button>
+                    <button class="timeline-btn" onclick="highlightMapPoint('mp7')">高亮地圖位置</button>
+                    <div id="detail7" style="display:none; margin-top:12px; padding:10px; background:#f5f0e6; border-radius:4px;">
+                        <p>奧普京修道院的經歷讓托爾斯泰進一步明確了自己的宗教觀：他否定教會的等級制度與教條主義，主張回歸《聖經》的核心——「愛鄰人」與「非暴力」，並將這種思想融入《簡明福音書》等著作中，成為其「托爾斯泰主義」的核心。</p>
+                    </div>
+                    <div id="location7" class="location-detail" data-point="mp7">
+                        <p>奧普京修道院建於14世紀，是19世紀俄國最重要的精神中心之一，以苦修與靈修傳統聞名。修道院位於莫斯科以南約190公里的科澤利斯克市郊，周圍森林環繞，環境幽靜，吸引了眾多尋求精神寄託的知識分子。</p>
+                        <a href="https://ibb.co/hFZXZF2H"><img src="https://i.ibb.co/v4QsQ4Lm/IMG-8198.jpg" alt="IMG-8198" border="0"></a>
+                        <div class="img-caption"> 位於卡盧加州科澤利斯克附近的奧普京修道院 </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 條目8：1910年 阿斯塔波沃車站 -->
+            <div class="timeline-item" id="item8">
+                <div class="timeline-time">1910年</div>
+                <div class="timeline-content">
+                    <span class="timeline-location">地理路線：亞斯納亞·波良納莊園 → 阿斯塔波沃車站（梁贊州）</span>
+                    <h3 class="timeline-title">逃離貴族生活，生命終結</h3>
+                    <p class="timeline-desc">82歲的托爾斯泰為徹底擺脫貴族身份的束縛，於10月28日深夜逃離亞斯納亞·波良納莊園，乘坐火車前往南方。途中因肺炎加重，於11月7日在阿斯塔波沃車站病逝，結束了其「知行合一」的一生。</p>
+                    <p class="timeline-monologue">"我老了，但不能再活在‘貴族的虛偽’裡。這列火車帶我去的不是遠方，是‘真實的生活’。"</p>
+                    <button class="timeline-btn" onclick="playSound()">播放場景環境音</button>
+                    <button class="timeline-btn" onclick="showLocation('location8')">地理詳情</button>
+                    <button class="timeline-btn" onclick="highlightMapPoint('mp8')">高亮地圖位置</button>
+                    <div id="location8" class="location-detail" data-point="mp8">
+                        <p>阿斯塔波沃車站（現名「列夫·托爾斯泰車站」）位於梁贊州，是托爾斯泰逃亡途中的臨時停靠點。他病逝後，車站站長將自己的房間改為臨終病房，現仍保留原樣，成為托爾斯泰紀念館的一部分。車站外立有托爾斯泰雕像，紀念這位文學巨匠的最後旅程。</p>
+                        <a href="https://ibb.co/kgvbWg4w"><img src="https://i.ibb.co/mCgZMC92/IMG-8200.jpg" alt="IMG-8200" border="0"></a>
+                        <div class="img-caption"> 列夫·托爾斯泰 </div>
+                        <a href="https://ibb.co/qMrDhTDK"><img src="https://i.ibb.co/zh4mCqmp/IMG-8199.jpg" alt="IMG-8199" border="0"></a>
+                        <div class="img-caption"> 阿斯塔波沃車站和列夫·托爾斯泰像  </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 側邊面板（速度、播放控制、顯示） -->
+    <div class="side-panel" id="sidePanel" aria-hidden="false">
+        <div class="label">路線動畫控制</div>
+        <div style="display:flex; gap:8px; align-items:center;">
+            <button class="btn" id="pauseRouteSmall">暫停</button>
+            <button class="btn" id="playRouteSmall">播放</button>
+        </div>
+        <div class="label" style="margin-top:6px;">燈箱圖片預覽：點擊任意圖片放大</div>
+        <div class="label" style="margin-top:6px;">快速操作</div>
+        <div style="display:flex; gap:8px;">
+            <button class="btn secondary" id="expandImgs">展開所有圖片</button>
+            <button class="btn secondary" id="collapseImgs">收合所有圖片</button>
+        </div>
+    </div>
+
+    <!-- 燈箱 -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightboxImg" src="" alt="放大圖片">
+    </div>
+
+    <!-- 回到頂部 -->
+    <button class="top-btn" id="topBtn" title="回到頂部">⬆ 回到頂部</button>
+
+    <!-- 可選的場景環境音（保留播放按鈕，但音檔可換；若不想音檔可不載入） -->
+    <audio id="timelineSound" src="https://freesound.org/data/previews/514/514809_10226524-lq.mp3"></audio>
+
+    <script>
+        /********** 初始滾動淡入 **********/
+        const items = document.querySelectorAll('.timeline-item');
+        function checkVisible() {
+            items.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.85) item.classList.add('active');
+            });
+        }
+        window.addEventListener('scroll', checkVisible);
+        window.dispatchEvent(new Event('scroll'));
+
+        /********** 顯示 / 隱藏詳情函式 **********/
+        function showDetail(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
+        function showLocation(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+            // 若開啟時高亮對應點
+            if (el.style.display === 'block' && el.dataset && el.dataset.point) {
+                highlightMapPoint(el.dataset.point);
+                // 平滑捲動地圖區到該卡片所在位置
+                const rect = el.getBoundingClientRect();
+                window.scrollBy({ top: rect.top - 80, behavior: 'smooth' });
+            }
+        }
+
+        /********** 全部展開 / 收合 **********/
+        document.getElementById('expandAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.location-detail').forEach(d => d.style.display = 'block');
+        });
+        document.getElementById('collapseAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.location-detail').forEach(d => d.style.display = 'none');
+        });
+        document.getElementById('expandDetailsBtn').addEventListener('click', () => {
+            document.querySelectorAll("[id^='detail']").forEach(d => d.style.display = 'block');
+        });
+        document.getElementById('collapseDetailsBtn').addEventListener('click', () => {
+            document.querySelectorAll("[id^='detail']").forEach(d => d.style.display = 'none');
+        });
+
+        /********** 高亮地圖節點 **********/
+        function highlightMapPoint(id) {
+            const pt = document.getElementById(id);
+            if (!pt) return;
+            // add animation class
+            pt.style.transition = 'transform 0.2s, box-shadow 0.2s';
+            pt.style.transform = 'scale(1.8)';
+            pt.style.boxShadow = '0 0 24px 8px rgba(255,215,0,0.95)';
+            setTimeout(() => {
+                pt.style.transform = '';
+                pt.style.boxShadow = '';
+            }, 3000);
+            // 同時閃爍一次地圖點的 ::after tooltip（模擬 hover tooltip）
+            pt.classList.add('temp-hover');
+            setTimeout(()=> pt.classList.remove('temp-hover'), 3000);
+        }
+
+        /********** 點擊 map-point 可快速打開對應詳情並放大圖片 **********/
+        document.querySelectorAll('.map-point').forEach(mp => {
+            mp.style.cursor = 'pointer';
+            mp.addEventListener('click', () => {
+                const id = mp.id; // mp1..mp8
+                // 找到對應 location-detail（透過 data-point 屬性）
+                const target = document.querySelector('.location-detail[data-point="'+id+'"]');
+                if (target) {
+                    // 展開並平滑捲動至此
+                    target.style.display = 'block';
+                    const rect = target.getBoundingClientRect();
+                    window.scrollBy({ top: rect.top - 60, behavior: 'smooth' });
+                    // 燈箱預載圖 - 不自動開啟燈箱
+                } else {
+                    // 若無對應，高亮該點
+                    highlightMapPoint(id);
+                }
+            });
+        });
+
+        /********** 燈箱（點擊圖片放大） **********/
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        document.querySelectorAll('.location-image').forEach(img => {
+            img.addEventListener('click', (e) => {
+                const src = img.dataset.img || img.src;
+                lightboxImg.src = src;
+                lightbox.style.display = 'flex';
+            });
+        });
+        function closeLightbox(){ lightbox.style.display = 'none'; lightboxImg.src = ''; }
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+        /********** 回到頂部 & 顯示按鈕 **********/
+        const topBtn = document.getElementById('topBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) topBtn.style.display = 'block'; else topBtn.style.display = 'none';
+        });
+        topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        /********** 路線動畫控制（播放 / 暫停 / 速度） **********/
+        const routeDot = document.getElementById('routeDot');
+        let routePlaying = true;
+        const toggleRouteBtn = document.getElementById('toggleRouteBtn');
+        toggleRouteBtn.addEventListener('click', () => {
+            routePlaying = !routePlaying;
+            if (routePlaying) {
+                routeDot.style.animationPlayState = 'running';
+                toggleRouteBtn.textContent = '暫停動畫';
+            } else {
+                routeDot.style.animationPlayState = 'paused';
+                toggleRouteBtn.textContent = '播放動畫';
+            }
+        });
+        // 小面板播放/暫停
+        document.getElementById('pauseRouteSmall').addEventListener('click', () => { routeDot.style.animationPlayState='paused'; routePlaying=false; toggleRouteBtn.textContent='播放動畫'; });
+        document.getElementById('playRouteSmall').addEventListener('click', () => { routeDot.style.animationPlayState='running'; routePlaying=true; toggleRouteBtn.textContent='暫停動畫'; });
+
+        // 速度控制（range）
+        const speedRange = document.getElementById('speedRange');
+        speedRange.addEventListener('input', () => {
+            const val = Number(speedRange.value); // seconds
+            // 重新設定動畫時長（較小值＝更快）
+            routeDot.style.animation = `routeMove ${val}s linear infinite`;
+        });
+
+        // 預設動畫為可見狀態
+        routeDot.style.animation = `routeMove 30s linear infinite`;
+        routeDot.style.animationPlayState = 'running';
+
+        /********** 跳轉下拉選單 **********/
+        document.getElementById('jumpSelect').addEventListener('change', (e) => {
+            const val = e.target.value;
+            if (!val) return;
+            const mp = document.getElementById(val);
+            if (!mp) return;
+            // 高亮並平滑滾動到對應的 timeline card（透過 data-point 屬性匹配）
+            highlightMapPoint(val);
+            const target = document.querySelector('.location-detail[data-point="'+val+'"]');
+            if (target) {
+                target.style.display = 'block';
+                const rect = target.getBoundingClientRect();
+                window.scrollBy({ top: rect.top - 80, behavior: 'smooth' });
+            } else {
+                // 若沒找到 detail，滾動到地圖位置
+                const mapRect = mp.getBoundingClientRect();
+                window.scrollBy({ top: mapRect.top - 80, behavior: 'smooth' });
+            }
+            e.target.value = '';
+        });
+
+        /********** 側邊面板：展開/收合所有圖片 **********/
+        document.getElementById('expandImgs').addEventListener('click', () => {
+            document.querySelectorAll('.location-detail').forEach(d => {
+                d.style.display = 'block';
+            });
+        });
+        document.getElementById('collapseImgs').addEventListener('click', () => {
+            document.querySelectorAll('.location-detail').forEach(d => {
+                d.style.display = 'none';
+            });
+        });
+
+        /********** 展開 / 收合圖片（toolbar 上的按鈕） **********/
+        document.getElementById('expandImgs')?.addEventListener('click', () => {});
+        // 上方 expand / collapse 已處理 location-detail
+
+        /********** 夜間模式切換 **********/
+        const toggleDarkBtn = document.getElementById('toggleDarkBtn');
+        toggleDarkBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        /********** 圖片載入替換地圖點預覽圖（滑鼠 hover 顯示） **********/
+        // 當使用者滑鼠移到 map-point 時，可選擇動態顯示小預覽（這裡保持簡潔，不額外插入元件）
+
+        /********** 圖片 & 按鈕：播放場景音（保留原 playSound 邏輯） **********/
+        function playSound() {
+            const sound = document.getElementById('timelineSound');
+            if (!sound) return;
+            sound.play().catch(err => {
+                alert('瀏覽器需要使用者互動後才能播放音頻，請先點擊頁面任意位置再嘗試~');
+            });
+        }
+
+        /********** 讓 timeline-image 點擊即可切換到燈箱，並可左右方向鍵切換（簡易） **********/
+        // 已實作點擊燈箱開啟與 Esc 關閉；可擴充左右切換（若需要我可以再加）
+        // 簡單的鍵盤切換：
+        window.addEventListener('keydown', (e) => {
+            if (lightbox.style.display !== 'flex') return;
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                // 找出目前 lightboxImg 在所有 images 中的 index
+                const imgs = Array.from(document.querySelectorAll('.location-image')).map(i => i.dataset.img || i.src);
+                let idx = imgs.indexOf(lightboxImg.src);
+                if (idx === -1) {
+                    // 如果當前不是本列表圖，則設為 0
+                    idx = 0;
+                }
+                if (e.key === 'ArrowLeft') idx = (idx - 1 + imgs.length) % imgs.length;
+                if (e.key === 'ArrowRight') idx = (idx + 1) % imgs.length;
+                lightboxImg.src = imgs[idx];
+            }
+        });
+
+        /********** 保障：如果使用者的瀏覽器無法載入 picsum 圖片，仍然保持原本文字內容可讀 **********/
+        // 若需更換為具歷史影像的公開圖片，請把各 img 的 data-img / src 換為實際圖片 URL 即可。
+    </script>
+</body>
+</html>
